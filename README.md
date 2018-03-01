@@ -121,4 +121,4 @@
 
 ## License
 
-[MIT](http://mikanlun.mit-license.org)
+[MIT](https://github.com/mikanlun/MyGallery/blob/master/LICENSE)
