@@ -1,0 +1,32 @@
+<nav class="navbar navbar-light bg-light border border-dark my-3 rounded fixedmenu">
+    <a class="navbar-brand" href="/">
+        <img src="/assets/brand.svg" width="30" height="30" class="d-inline-block align-top" alt="My Gallery"> My Gallery</a>
+    <ul class="nav justify-content-end">
+        {% if login != true %}
+            <li class="nav-item">
+                <a class="nav-link" href="/src/auth/login.php">ログイン</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/src/auth/register.php">新規登録</a>
+            </li>
+        {% else %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ userName }}</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/src/albums/register.php">アルバム登録</a>
+                    <a class="dropdown-item" href="/src/auth/account.php">アカウント</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item bg-light" href="/src/auth/logout.php">ログアウト</a>
+                </div>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="/src/support/about.php">My Gallery ?</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/src/support/contact.php">お問い合わせ</a>
+        </li>
+    </ul>
+</nav>
+
+

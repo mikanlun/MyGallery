@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}My Gallery ? -  {% endblock %}
+
+{% block content %}
+
+<section  class="container-fluid">
+    <div class="card  border border-dark mb-3">
+        <div class="card-header font-weight-bold">My Gallery ?</div>
+        <div class="card-body text-dark">
+            <p class="text-left">{{ aboutMsg1 | nl2br}}</p>
+        </div><!-- .card-body -->
+        {% if login != true %}
+            <div class="card-footer border-light">
+                <p class="text-left">{{ aboutMsg2 | nl2br}}</p>
+                        <a class="btn btn-primary btn-lg" href="{{ auth_register_url }}" role="button">新規登録</a>
+            </div>
+        {% endif %}
+    </div><!-- .card -->
+    <div class="form-group row">
+        <div class="col-sm-12 text-center">
+            <a class="btn btn-success btn-lg mr-3" href="{{ back_url }}" role="button">My Gallery</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

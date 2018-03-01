@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}お問い合わせ（確認） - {% endblock %}
+{% block content %}
+
+<section class="container-fluid">
+    <div class="card  border border-dark mb-3">
+        <div class="card-header font-weight-bold">お問い合わせ（確認）</div>
+        <div class="card-body text-dark mx-3">
+            {% if err_mesgs_cnt > 0 %}
+            <div class="alert alert-danger">
+                <ul>
+                {%for err_mesg in err_mesgs %}
+                  <li>{{err_mesg}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form action="contact_confirm.php" method="post">
+                <fieldset disabled>
+                    <div class="form-group row">
+                        <label for="name" class="col-md-3 col-form-label bg-info text-white rounded">氏名</label>
+                        <div class="col-md-9">
+                            <input type="text" name="name"  value="{{name}}" class="form-control col-5" id="name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passeord" class="col-md-3 col-form-label bg-info text-white rounded">メールアドレス</label>
+                        <div class="form-row col-md-9">
+                            <div class="col-md-5">
+                                <input type="text" name="email"  value="{{email}}" class="form-control" id="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="contact" class="col-md-3 col-form-label bg-info text-white rounded">お問い合わせ内容</label>
+                        <div class="col-md-9">
+                            <textarea name="contact" class="form-control ccol-md-9"" id="contact" row="3">{{ contact}}</textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group row">
+                    <div class="col-md-12 text-center">
+                        <a class="btn btn-warning btn-lg mr-3" href="{{ back_url }}" role="button">戻る</a>
+                        <button type="submit" class="btn btn-primary btn-lg">送信</button>
+                    </div>
+                </div>
+
+                {# トークン #}
+                 <input type="hidden" name="token" value="{{ token }}">
+
+                {# ユーザー登録情報 #}
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="email" value="{{ email }}">
+                <input type="hidden" name="contact" value="{{ contact }}">
+
+            </form>
+        </div><!-- .card-body -->
+    </div><!-- .card -->
+</section>
+{% endblock %}
+

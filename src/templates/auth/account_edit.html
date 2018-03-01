@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ parent() }}
+        <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+{% endblock %}
+
+{% block title %}ユーザー 登録情報（編集） - {% endblock %}
+{% block content %}
+
+<section class="container-fluid">
+    <div class="card  border border-dark mb-3">
+        <div class="card-header font-weight-bold">ユーザー 登録情報（編集）</div>
+        <div class="card-body text-dark mx-3">
+            {% if err_mesgs_cnt > 0 %}
+            <div class="alert alert-danger">
+                <ul>
+                {%for err_mesg in err_mesgs %}
+                  <li>{{err_mesg}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form action="account_edit.php" method="post">
+                <div class="form-group row">
+                    <label for="name" class="col-md-2 col-form-label bg-info text-white rounded">氏名</label>
+                    <div class="col-md-10">
+                        <input type="text" name="name"  value="{{name}}" class="form-control col-5" id="name" autofocus>
+                    </div>
+                </div>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-md-2 bg-info text-white rounded">性別</legend>
+                        <div class="col-md-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sex" value="1" {{ (sex == '1')? "checked":"" }} id="sex1">
+                                <label class="form-check-label" for="sex1">男</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sex" value="2" {{ (sex == '2')? "checked":"" }} id="sex2">
+                                <label class="form-check-label" for="sex2">女</label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <label for="birthday" class="col-md-2 col-form-label bg-info text-white rounded">生年月日</label>
+                    <div class="form-row col-md-10">
+                        <div class="col-md-1.8">
+                            <select name="birthday_year" id="birthday_year" class="form-control">
+                                    {% for i in startYear..endYear %}
+                                        <option value="{{i}}"  {{ birthday_year == i ? 'selected':''}}>
+                                            {{i}}
+                                        </option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <label for="birthday_year">年</label>
+                        <div class="col-md-1.5">
+                            <select name="birthday_month" id="birthday_month" class="form-control">
+                                    {% for i in 1..12 %}
+                                        <option value="{{i}}"  {{ birthday_month == i ? 'selected':''}}>
+                                            {{i}}
+                                        </option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <label for="birthday_month">月</label>
+                        <div class="col-md-1.5">
+                            <select name="birthday_day" id="birthday_day" class="form-control">
+                                    {% for i in 1..31 %}
+                                        <option value="{{i}}"  {{ birthday_day == i ? 'selected':''}}>
+                                            {{i}}
+                                        </option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <label for="birthday_day">日</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-md-2 col-form-label bg-info text-white rounded">住所</label>
+                    <div class="form-row col-md-10">
+                        <div class="col-md-2">
+                            <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
+                            <input type="text" name="zip21" class="form-control" value="{{zip21}}" maxlength="3">
+                        </div>
+                        <span> － </span>
+                        <div class="col-md-2">
+                            <input type="text" name="zip22" class="form-control" value="{{zip22}}" maxlength="4"
+                             onKeyUp="AjaxZip3.zip2addr('zip21','zip22','addr21','addr21');">
+                        </div>
+                        <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
+                        <div class="col-md-12">
+                            <input type="text" name="addr21" class="form-control" value="{{addr21}}" size="50">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tel" class="col-md-2 col-form-label bg-info text-white rounded">電話番号</label>
+                    <div class="form-row col-md-10">
+                        <div class="col-md-2">
+                            <input type="text" name="tel00"  value="{{tel00}}" class="form-control" id="tel00">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="tel01"  value="{{tel01}}" class="form-control" id="tel01">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="tel02"  value="{{tel02}}" class="form-control" id="tel02">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="passeord" class="col-md-2 col-form-label bg-info text-white rounded">メールアドレス</label>
+                    <div class="form-row col-md-10">
+                        <div class="col-md-5">
+                            <input type="text" name="email"  value="{{email}}" class="form-control" id="email">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="email_conf"  value="{{email_conf}}" class="form-control" id="email_conf">
+                            <small class="text-muted">(確認)</small><br>
+                            <small class="text-muted">(未入力の時は登録済のメールアドレスを流用)</small>
+                        </div>
+                    </div>
+               </div>
+                <div class="form-group row">
+                    <label for="password" class="col-md-2 col-form-label bg-info text-white rounded">パスワード</label>
+                    <div class="form-row col-md-10">
+                        <div class="col-md-5">
+                            <input type="text" name="password"  value="{{password}}" class="form-control" id="password" placeholder="未表示">
+                            <small class="text-muted">(半角英数字で5桁以上10桁以内)</small><br>
+                            <small class="text-muted">(未入力の時は登録済のパスワードを流用)</small>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="password_conf"  value="{{password_conf}}" class="form-control" id="password_conf">
+                            <small class="text-muted">(確認)</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="profile" class="col-md-2 col-form-label bg-info text-white rounded">プロフィール</label>
+                    <div class="col-md-10">
+                        <textarea name="profile" class="form-control ccol-md-10"" id="profile" row="3">{{ profile}}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12 text-center">
+                        <a class="btn btn-warning btn-lg mr-3" href="{{ back_url }}" role="button">戻る</a>
+                        <button type="submit" class="btn btn-primary btn-lg">確認</button>
+                    </div>
+                </div>
+
+                {# トークン #}
+                 <input type="hidden" name="token" value="{{ token }}">
+
+                {# ユーザー更新情報 #}
+                <input type="hidden" name="oldEmail" value="{{ oldEmail }}">
+
+            </form>
+        </div><!-- .card-body -->
+    </div><!-- .card -->
+</section>
+{% endblock %}
+

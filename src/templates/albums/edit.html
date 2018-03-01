@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}アルバム更新 - {% endblock %}
+
+{% block content %}
+
+<section class="container-fluid">
+    <div class="card  border border-dark mb-3">
+        <div class="card-header font-weight-bold">アルバム更新</div>
+        <div class="card-body text-dark mx-3">
+            {% if err_mesgs_cnt > 0 %}
+            <div class="alert alert-danger">
+                <ul>
+                {%for err_mesg in err_mesgs %}
+                  <li>{{err_mesg}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form action="edit.php" method="post" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 col-form-label bg-info text-white rounded">タイトル</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="title"  value="{{title}}" autofocus class="form-control col-sm-10" id="title">
+                       <small class="text-muted">(20桁以下)</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="image" class="col-sm-2 col-form-label bg-info text-white rounded">画像</label>
+                    <div class="col-sm-10">
+                       <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                       <input type="file" name="image"  class="form-control-file" id="image">
+                       <small class="text-muted">(GIF, PNG, JPEG, JPG) 2MB以下</small>
+                       <small class="text-muted">(未選択の時は登録済の画像を流用)</small>
+                    </div>
+                    <div>
+                       <label class="text-muted">[ 登録済みの画像 : {{ oldImageName }} ]</label>
+                            <img class="card-img-bottom"
+                                  src="/images/{{ imagePath }}/{{ oldImageName }}"
+                                  alt="{{ oldImageName }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="comment" class="col-sm-2 col-form-label bg-info text-white rounded">コメント</label>
+                    <div class="col-sm-10">
+                        <textarea name="comment" class="form-control ccol-sm-10"" id="comment" row="3">{{ comment}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12 text-center">
+                        <a class="btn btn-warning btn-lg mr-3" href="{{ back_url }}" role="button">戻る</a>
+                        <button type="submit" class="btn btn-primary btn-lg mr-3">更新</button>
+                        <a class="btn btn-danger btn-lg" id="delete_image" data-url="{{ image_delete_url }}" role="button">削除</a>
+                    </div>
+                </div>
+
+               {# 画像ID #}
+                <input type="hidden" name="albumId" value="{{albumId}}">
+               {# 画像PATH #}
+                <input type="hidden" name="imagePath" value="{{imagePath}}">
+               {# 画像NAME #}
+                <input type="hidden" name="oldImageName" value="{{oldImageName}}">
+               {# CSRF対策 #}
+                <input type="hidden" name="token" value="{{token}}">
+
+            </form>
+        </div><!-- .card-body -->
+    </div><!-- .card -->
+</section>
+{% endblock %}

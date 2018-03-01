@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {# 認証済みのユーザーか #}
+    {% if login == true %}
+        {# 認証済みのユーザーのアルバム #}
+        {% if startFlg == true %}
+            {# 認証済みのユーザーのアルバムは未登録 #}
+
+            {% include 'albums/includes/index_start.html' %}
+
+        {% else %}
+            {# 認証済みのユーザーのアルバムは登録済み #}
+            <div class="slide" data-user_cnt='{{ userCnt }}' >
+                {# スライドショー #}
+                <ul class="album-container">
+                {% for album in albums %}
+                    <li>
+                        <div class="card border-light mb-3">
+                            <div class="card-header border-light card-title">
+                                <h5>{{ album.title }}</h5>
+                            </div>
+                            <a href="{{ show_url }}?albumId={{ album.id }}">
+                                <img class="card-img-top"
+                                      src="/images/{{ album.path }}/{{ album.image }}"
+                                      alt="{{ album.image }}">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text">{{ album.comment  | nl2br }}</p>
+                            </div>
+                            <div class="card-footer border-light">
+                                by {{ album.name }} : ({{ album.modified }})
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                <a href="#" class="prev">前の画像</a>
+                <a href="#" class="next">次の画像</a>
+
+                {# サムネイル #}
+                <div class="card border-light bg-light mb-3">
+                    <div class="card-header border-light card-title">
+                        <div class="title text-secondary float-left"></div>
+                        <a class="btn btn-info btn-sm ml-3 float-right" href="/src/auth/profile.php?userId={{ userId }}" role="button">プロフィール</a>
+                        <div class="name text-info float-right"></div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="thumbnail">
+                        {% for album in albums %}
+                            <li>
+                                <a href="{{ show_url }}?albumId={{ album.id }}">
+                                    <img src="/images/{{ album.path }}/{{ album.image }}"
+                                        data-title="{{ album.title }}" data-name="{{ album.name }}"
+                                        alt="{{ album.image }}" class="img-thumbnail w-100 h-100">
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {# 一般ユーザーのアルバム #}
+        {% if startFlg == true %}
+            {# 一般ユーザーのアルバムは未登録 #}
+
+            {% include 'albums/includes/index_start.html' %}
+
+        {% else %}
+            {# 一般ユーザーのアルバムは登録済み #}
+            <div class="slide" data-user_cnt='{{ userCnt }}' >
+                {# スライドショー #}
+                 <ul class="album-container">
+                {% for album in albums %}
+                    <li>
+                        <div class="card border-light mb-3">
+                            <div class="card-header border-light card-title">
+                                 <h5>{{ album.title }}</h5>
+                            </div>
+                            <a href="{{ show_url }}?albumId={{ album.id }}">
+                                <img class="card-img-top"
+                                     src="/images/{{ album.path }}/{{ album.image }}"
+                                     alt="{{ album.image }}">
+                            </a>
+                             <div class="card-body">
+                                 <p class="card-text">{{ album.comment  | nl2br }}</p>
+                             </div>
+                             <div class="card-footer border-light">
+                                 by {{ album.name }} : ({{ album.modified }})
+                             </div>
+                         </div>
+                     </li>
+                 {% endfor %}
+                 </ul>
+                 <a href="#" class="prev">前の画像</a>
+                 <a href="#" class="next">次の画像</a>
+
+                {# サムネイル #}
+                {% for thumbnailUser in thumbnails %}
+                <div class="card border-light bg-light mb-3">
+                    <div class="card-header border-light card-title">
+                        <div class="title text-secondary float-left"></div>
+                        <a class="btn btn-info btn-sm ml-3 float-right" href="/src/auth/profile.php?userId={{ thumbnailUser.userId }}" role="button">プロフィール</a>
+                        <div class="name text-info float-right"></div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="thumbnail">
+                        {% for thumbnail in thumbnailUser.userInfo %}
+                            <li>
+                                <a href="{{ show_url }}?albumId={{ thumbnail.id }}">
+                                    <img src="/images/{{ thumbnail.path }}/{{ thumbnail.image }}"
+                                        data-title="{{ thumbnail.title }}" data-name="{{ thumbnail.name }}"
+                                        alt="{{ thumbnail.image }}" class="img-thumbnail w-100 h-100">
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

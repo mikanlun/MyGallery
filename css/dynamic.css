@@ -1,0 +1,151 @@
+@charset "UTF-8";
+
+/**
+ * ウィンドウ上端でグローバルナビゲーションを固定する
+ */
+.fixed {
+    position: fixed;
+    z-index: 11;
+}
+
+.navbar.fixed {
+    width: 97%;
+}
+
+
+/**
+ * スクロールしてページトップに戻る
+ */
+/* ページトップに戻るボタンのスタイル */
+#page-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 77%;
+    z-index: 11;
+}
+
+#page-top a {
+    display: block;
+    width: 50px;
+    padding: 30px 0;
+    background: #aaa;
+    border-radius: 5px;
+    background-image: url(../assets/arrow-1.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    text-indent: -5000px;
+}
+
+#page-top a:hover {
+    background-image: url(../assets/arrow-2.png);
+}
+
+#page-top a:active {
+    background-image: url(../assets/arrow-3.png);
+}
+
+
+/**
+ * スライドショー
+ */
+.start,
+.slide {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.slide {
+    position: relative;
+}
+
+.slide img.card-img-top {
+    width: 50rem;
+}
+
+.slide > .album-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* 写真の配置 */
+.slide > .album-container > li {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+.slide > .album-container > li.current {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+}
+
+/* スライドショーのボタン */
+.slide a.prev,
+.slide a.next {
+    position: absolute;
+    display: block;
+    top: 330px;
+    width: 40px;
+    height: 40px;
+    text-indent: -5000px;
+    z-index: 10; /* ボタンを常に画像より上に配置 */
+}
+
+.slide a.prev {
+    background: url(../assets/arrow-left1.png) #aaa 50% 50% no-repeat;
+    left: 0;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.slide a.prev:hover {
+    background: url(../assets/arrow-left2.png) #aaa 50% 50% no-repeat;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.slide a.prev:active {
+    background: url(../assets/arrow-left3.png) #aaa 50% 50% no-repeat;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.slide a.next {
+    background: url(../assets/arrow-right1.png) #aaa 50% 50% no-repeat;
+    right: 0;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.slide a.next:hover {
+    background: url(../assets/arrow-right2.png) #aaa 50% 50% no-repeat;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.slide a.next:active {
+    background: url(../assets/arrow-right3.png) #aaa 50% 50% no-repeat;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+
+/**
+ * サムネイル
+ */
+ul.thumbnail {
+    margin: 0;
+    padding: 0 20px;
+}
+
+.thumbnail li {
+    width: 120px;
+}

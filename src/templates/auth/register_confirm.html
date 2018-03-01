@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}ユーザー 新規登録（確認） - {% endblock %}
+{% block content %}
+
+<section class="container-fluid">
+    <div class="card  border border-dark mb-3">
+        <div class="card-header font-weight-bold">ユーザー 新規登録（確認）</div>
+        <div class="card-body text-dark mx-3">
+            <form action="register_confirm.php" method="post">
+                <fieldset disabled>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label bg-info text-white rounded">氏名</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name"  value="{{name}}" class="form-control col-5" id="name">
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 bg-info text-white rounded">性別</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sex" value="1" {{ (sex == '1')? "checked":"" }} id="sex1">
+                                    <label class="form-check-label" for="sex1">男</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sex" value="2" {{ (sex == '2')? "checked":"" }} id="sex2">
+                                    <label class="form-check-label" for="sex2">女</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group row">
+                        <label for="birthday" class="col-sm-2 col-form-label bg-info text-white rounded">生年月日</label>
+                        <div class="form-row col-sm-10">
+                            <div class="col-sm-1.8">
+                                <select name="birthday_year" id="birthday_year" class="form-control">
+                                        {% for i in startYear..endYear %}
+                                            <option value="{{i}}"  {{ birthday_year == i ? 'selected':''}}>
+                                                {{i}}
+                                            </option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <label for="birthday_year">年</label>
+                            <div class="col-sm-1.5">
+                                <select name="birthday_month" id="birthday_month" class="form-control">
+                                        {% for i in 1..12 %}
+                                            <option value="{{i}}"  {{ birthday_month == i ? 'selected':''}}>
+                                                {{i}}
+                                            </option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <label for="birthday_month">月</label>
+                            <div class="col-sm-1.5">
+                                <select name="birthday_day" id="birthday_day" class="form-control">
+                                        {% for i in 1..31 %}
+                                            <option value="{{i}}"  {{ birthday_day == i ? 'selected':''}}>
+                                                {{i}}
+                                            </option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <label for="birthday_day">日</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label bg-info text-white rounded">住所</label>
+                        <div class="form-row col-sm-10">
+                            <div class="col-sm-2">
+                                <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
+                                <input type="text" name="zip21" class="form-control" value="{{zip21}}" maxlength="3" placeholder="530">
+                            </div>
+                            <span> － </span>
+                            <div class="col-sm-2">
+                                <input type="text" name="zip22" class="form-control" value="{{zip22}}" maxlength="4"  placeholder="0000"
+                                 onKeyUp="AjaxZip3.zip2addr('zip21','zip22','addr21','addr21');">
+                            </div>
+                            <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
+                            <div class="col-sm-12">
+                                <input type="text" name="addr21" class="form-control" value="{{addr21}}" size="50"  placeholder="大阪府大阪市北区">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="tel" class="col-sm-2 col-form-label bg-info text-white rounded">電話番号</label>
+                        <div class="form-row col-sm-10">
+                            <div class="col-sm-2">
+                                <input type="text" name="tel00"  value="{{tel00}}" class="form-control" id="tel00" placeholder="06">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" name="tel01"  value="{{tel01}}" class="form-control" id="tel01" placeholder="1234">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" name="tel02"  value="{{tel02}}" class="form-control" id="tel02" placeholder="5678">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passeord" class="col-sm-2 col-form-label bg-info text-white rounded">メールアドレス</label>
+                        <div class="form-row col-sm-10">
+                            <div class="col-sm-5">
+                                <input type="text" name="email"  value="{{email}}" class="form-control" id="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label bg-info text-white rounded">パスワード</label>
+                        <div class="form-row col-sm-10">
+                            <div class="col-sm-5">
+                                <input type="text" name="password"  value="{{password}}" class="form-control" id="password">
+                                <small class="text-muted">(半角英数字で5桁以上10桁以内)</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="profile" class="col-sm-2 col-form-label bg-info text-white rounded">プロフィール</label>
+                        <div class="col-sm-10">
+                            <textarea name="profile" class="form-control ccol-sm-10"" id="profile" row="3">{{ profile}}</textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group row">
+                    <div class="col-sm-12 text-center">
+                        <a class="btn btn-warning btn-lg mr-3" href="{{ back_url }}" role="button">戻る</a>
+                        <button type="submit" class="btn btn-primary btn-lg">登録</button>
+                    </div>
+                </div>
+
+                {# トークン #}
+                 <input type="hidden" name="token" value="{{ token }}">
+
+                {# ユーザー登録情報 #}
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="sex" value="{{ sex }}">
+                <input type="hidden" name="birthday_year" value="{{ birthday_year }}">
+                <input type="hidden" name="birthday_month" value="{{ birthday_month }}">
+                <input type="hidden" name="birthday_day" value="{{ birthday_day }}">
+                <input type="hidden" name="zip21" value="{{ zip21 }}" size="4" maxlength="3">
+                <input type="hidden" name="zip22" value="{{ zip22 }}" size="5" maxlength="4">
+                <input type="hidden" name="addr21" value="{{ addr21 }}" size="40">
+                <input type="hidden" name="tel00" value="{{ tel00 }}">
+                <input type="hidden" name="tel01" value="{{ tel01 }}">
+                <input type="hidden" name="tel02" value="{{ tel02 }}">
+                <input type="hidden" name="email" value="{{ email }}">
+                <input type="hidden" name="password" id="password" value="{{ password }}">
+                <input type="hidden" name="profile" value="{{ profile }}">
+
+            </form>
+        </div><!-- .card-body -->
+    </div><!-- .card -->
+</section>
+{% endblock %}
+
