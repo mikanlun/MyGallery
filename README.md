@@ -44,12 +44,13 @@
 　プログラムの中で "unlink、rmdir "を使用しています。  
 　テストは行いました。念のためにお伝えします。  
 
-・unlink  
-　/src/albums/edit.php 120行  
-　/src/albums/delete.php 36行  
-　/src/auth/account_delete.php 41行  
-・rmdir  
-　/src/auth/account_delete.php 47行  
+
+    ・unlink  
+      /src/albums/edit.php 120行
+      /src/albums/delete.php 36行
+      /src/auth/account_delete.php 41行
+    ・rmdir  
+      /src/auth/account_delete.php 47行
 
 　1.データベースの設定  
  
@@ -102,15 +103,21 @@
           KEY `user_id` (`user_id`),
           CONSTRAINT `albums_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`));
 
-　3.ドキュメントルート  
+　3.メールアドレスの設定  
+
+    "admin@example.jp"を変更してください。  
+    /app/config/define.php 4行  
+    $support_email = "admin@example.jp";   
+
+　4.ドキュメントルート  
  　・ドキュメントルートは、 'gallery' に設定してください。 
 
-　4.ディレクトリのオーナの設定  
+　5.ディレクトリのオーナの設定  
  　・画像保存のディレクトリ images のオーナをwebサーバーの実行ユーザーに設定してください。  
     
     /images
 
-　5.エントリーポイント  
+　6.エントリーポイント  
  
     /index.php
 
